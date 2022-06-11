@@ -9,6 +9,15 @@ export async function getAll(): Promise<Product[]> {
   return products as Product[];
 }
 
+export async function getById(id: number): Promise<Product> {
+  const query = 'SELECT * FROM Trybesmith.Products WHERE orderId = ?';
+  const values = [id];
+  const [products] = await connection.execute(query, values);
+  const [product] = products as Product[];
+
+  return product || null;
+}
+
 export async function create(product: IProduct): Promise<IProduct> {
   const { name, amount } = product;
 
